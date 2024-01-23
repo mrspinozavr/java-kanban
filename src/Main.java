@@ -1,9 +1,7 @@
-import Service.TaskManager;
+import service.TaskManager;
 import model.Epic;
 import model.SubTask;
 import model.Task;
-
-import java.util.Arrays;
 
 public class Main {
 
