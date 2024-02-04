@@ -31,6 +31,11 @@ public class InMemoryTaskManager implements TaskManager{
     //-----Получение списка всех задач.-----
 
     @Override
+    public List<Task> getHistory() {
+        return historyManager.getHistory();
+    }
+
+    @Override
     public List<Task> getAllTasks() {
         return new ArrayList<>(tasks.values());
     }
