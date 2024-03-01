@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class InMemoryTaskManager implements TaskManager{
+public class InMemoryTaskManager implements TaskManager {
     private final HashMap<Integer, Task> tasks;
     private final HashMap<Integer, SubTask> subTasks;
     private final HashMap<Integer, Epic> epics;
@@ -45,6 +45,7 @@ public class InMemoryTaskManager implements TaskManager{
         return new ArrayList<>(epics.values());
 
     }
+
     @Override
     public List<SubTask> getAllSubTasks() {
         return new ArrayList<>(subTasks.values());
@@ -100,14 +101,14 @@ public class InMemoryTaskManager implements TaskManager{
     //-----Создание.-----
 
     @Override
-    public Task createTask(Task task){
+    public Task createTask(Task task) {
         task.setId(generateId());
         tasks.put(task.getId(), task);
         return task;
     }
 
     @Override
-    public SubTask createSubTask(SubTask subTask){
+    public SubTask createSubTask(SubTask subTask) {
         subTask.setId(generateId());
         subTasks.put(subTask.getId(), subTask);
         Epic epic = subTask.getEpic();
@@ -117,7 +118,7 @@ public class InMemoryTaskManager implements TaskManager{
     }
 
     @Override
-    public Epic createEpic(Epic epic){
+    public Epic createEpic(Epic epic) {
         epic.setId(generateId());
         epics.put(epic.getId(), epic);
         return epic;
@@ -179,7 +180,7 @@ public class InMemoryTaskManager implements TaskManager{
         return epic.getSubTasks();
     }
 
-    private TaskStatus calculateStatus(Epic epic){
+    private TaskStatus calculateStatus(Epic epic) {
         boolean isNew = false;
         boolean isProgress = false;
         boolean isDone = false;
