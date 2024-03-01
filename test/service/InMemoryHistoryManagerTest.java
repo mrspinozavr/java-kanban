@@ -7,6 +7,7 @@ import model.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +52,7 @@ class InMemoryHistoryManagerTest {
 
     @DisplayName("Удаление заглавной (head) задачи из истории")
     @Test
-    void removeFromHead(){
+    void removeFromHead() {
         historyManager.add(task);
         historyManager.add(epic);
         historyManager.add(subtask);
@@ -64,7 +65,7 @@ class InMemoryHistoryManagerTest {
 
     @DisplayName("Удаление задачи из середины истории")
     @Test
-    void removeFromMiddle(){
+    void removeFromMiddle() {
         historyManager.add(task);
         historyManager.add(epic);
         historyManager.add(subtask);
@@ -77,7 +78,7 @@ class InMemoryHistoryManagerTest {
 
     @DisplayName("Удаление конечной (tail) задачи из истории")
     @Test
-    void removeFromTail(){
+    void removeFromTail() {
         historyManager.add(epic);
         historyManager.add(subtask);
         historyManager.add(task);

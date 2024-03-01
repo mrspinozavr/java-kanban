@@ -6,7 +6,9 @@ import model.Task;
 import model.TaskStatus;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
@@ -42,12 +44,12 @@ class InMemoryTaskManagerTest {
         taskManager.removeAllTasks();
 
         final List<Task> tasks = taskManager.getAllTasks();
-        assertEquals(0,tasks.size(), "Задачи не удалены");
+        assertEquals(0, tasks.size(), "Задачи не удалены");
     }
 
     @DisplayName("Проверка получения задачи по id")
     @Test
-    void getTaskById(){
+    void getTaskById() {
         Task task1 = new Task("Задача 1", "Закрыть 5 спринт", TaskStatus.NEW);
         taskManager.createTask(task1);
 
@@ -72,13 +74,13 @@ class InMemoryTaskManagerTest {
 
         final List<Task> tasks = taskManager.getAllTasks(); // получили все задачи
         assertNotNull(tasks, "Задачи не возвращаются");
-        assertEquals(1, tasks.size(),"Неверное количество задач");
-        assertEquals(task1, tasks.get(0),"Задачи не совпадают");
+        assertEquals(1, tasks.size(), "Неверное количество задач");
+        assertEquals(task1, tasks.get(0), "Задачи не совпадают");
     }
 
     @DisplayName("Проверка обновления задачи")
     @Test
-    void updateTask(){
+    void updateTask() {
         Task task1 = new Task("Задача 1", "Закрыть 5 спринт", TaskStatus.NEW);
         taskManager.createTask(task1);
 
@@ -97,9 +99,10 @@ class InMemoryTaskManagerTest {
 
         final List<Task> tasks = taskManager.getAllTasks(); // сохранили все задачи
         assertNotNull(tasks, "Задачи не возвращаются");
-        assertEquals(1, tasks.size(),"Неверное количество задач");
-        assertEquals(task2, tasks.get(0),"Задачи не совпадают");
+        assertEquals(1, tasks.size(), "Неверное количество задач");
+        assertEquals(task2, tasks.get(0), "Задачи не совпадают");
     }
+
     @DisplayName("Проверка удаления задачи по id")
     @Test
     void removeTaskById() {
@@ -114,8 +117,8 @@ class InMemoryTaskManagerTest {
         final List<Task> tasks = taskManager.getAllTasks(); // сохранили оставшиеся задачи
 
         assertNotNull(tasks, "Задачи не возвращаются");
-        assertEquals(1, tasks.size(),"Неверное количество задач");
-        assertEquals(task2, tasks.get(0),"Задачи не совпадают"); // т.к. первую удалили
+        assertEquals(1, tasks.size(), "Неверное количество задач");
+        assertEquals(task2, tasks.get(0), "Задачи не совпадают"); // т.к. первую удалили
     }
 
     // Epic
@@ -144,12 +147,12 @@ class InMemoryTaskManagerTest {
         taskManager.removeAllEpics();
 
         final List<Epic> epics = taskManager.getAllEpics();
-        assertEquals(0,epics.size(), "Задачи не удалены");
+        assertEquals(0, epics.size(), "Задачи не удалены");
     }
 
     @DisplayName("Проверка получения эпика по id")
     @Test
-    void getEpicById(){
+    void getEpicById() {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
@@ -162,7 +165,7 @@ class InMemoryTaskManagerTest {
 
     @DisplayName("Проверка добавления эпика")
     @Test
-    void createEpic(){
+    void createEpic() {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
@@ -174,8 +177,8 @@ class InMemoryTaskManagerTest {
 
         final List<Epic> epics = taskManager.getAllEpics(); // сохранили все эпики
         assertNotNull(epics, "Задачи не возвращаются");
-        assertEquals(1, epics.size(),"Неверное количество задач");
-        assertEquals(epic1, epics.get(0),"Задачи не совпадают");
+        assertEquals(1, epics.size(), "Неверное количество задач");
+        assertEquals(epic1, epics.get(0), "Задачи не совпадают");
     }
 
     @DisplayName("Проверка обновления эпика")
@@ -199,8 +202,8 @@ class InMemoryTaskManagerTest {
 
         final List<Epic> epics = taskManager.getAllEpics();
         assertNotNull(epics, "Задачи не возвращаются");
-        assertEquals(1, epics.size(),"Неверное количество задач");
-        assertEquals(epic2, epics.get(0),"Задачи не совпадают");
+        assertEquals(1, epics.size(), "Неверное количество задач");
+        assertEquals(epic2, epics.get(0), "Задачи не совпадают");
     }
 
     @DisplayName("Проверка удаления эпика по id")
@@ -216,8 +219,8 @@ class InMemoryTaskManagerTest {
 
         final List<Epic> epics = taskManager.getAllEpics();
         assertNotNull(epics, "Задачи не возвращаются");
-        assertEquals(1, epics.size(),"Неверное количество задач");
-        assertEquals(epic2, epics.get(0),"Задачи не совпадают");
+        assertEquals(1, epics.size(), "Неверное количество задач");
+        assertEquals(epic2, epics.get(0), "Задачи не совпадают");
     }
 
     // SubTask
@@ -238,7 +241,7 @@ class InMemoryTaskManagerTest {
         final List<SubTask> SubTasks = taskManager.getEpicSubTasks(epic1); //сохранили все подзадачи в список
 
         assertNotNull(SubTasks, "Подзадачи не возвращаются");
-        assertEquals(3, SubTasks.size(),"Неверное количество подзадач");
+        assertEquals(3, SubTasks.size(), "Неверное количество подзадач");
         assertEquals(subTask11, SubTasks.get(0), "Подзадачи не совпадают");
     }
 
@@ -260,16 +263,17 @@ class InMemoryTaskManagerTest {
 
         final List<SubTask> SubTasks = taskManager.getEpicSubTasks(epic1); //сохранили все подзадачи в список
 
-        assertEquals(0,SubTasks.size(), "Подзадачи не удалены");
+        assertEquals(0, SubTasks.size(), "Подзадачи не удалены");
     }
 
     @DisplayName("Проверка получения подзадачи по id")
     @Test
-    void getSubTask(){
+    void getSubTask() {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
-        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);;
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);
+        ;
         taskManager.createSubTask(subTask11);
 
         final int idTask = subTask11.getId();
@@ -281,7 +285,7 @@ class InMemoryTaskManagerTest {
 
     @DisplayName("Проверка добавления подзадачи")
     @Test
-    void createSubTask(){
+    void createSubTask() {
         Epic epic1 = new Epic("Эпик 1", "Большой переезд."); // id Task 3
         taskManager.createEpic(epic1);
 
@@ -302,13 +306,13 @@ class InMemoryTaskManagerTest {
         final List<SubTask> SubTasks = taskManager.getEpicSubTasks(epic1);
 
         assertNotNull(SubTasks, "Подзадачи не возвращаются");
-        assertEquals(3, SubTasks.size(),"Неверное количество подзадач");
-        assertEquals(subTask11, SubTasks.get(0),"Подзадачи не совпадают");
+        assertEquals(3, SubTasks.size(), "Неверное количество подзадач");
+        assertEquals(subTask11, SubTasks.get(0), "Подзадачи не совпадают");
     }
 
     @DisplayName("Проверка обновления подзадачи")
     @Test
-    void updateSubTask(){
+    void updateSubTask() {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
@@ -330,13 +334,13 @@ class InMemoryTaskManagerTest {
         final List<SubTask> SubTasks = taskManager.getEpicSubTasks(epic1);
 
         assertNotNull(SubTasks, "Подзадачи не возвращаются");
-        assertEquals(1, SubTasks.size(),"Неверное количество подзадач");
-        assertEquals(subTask11, SubTasks.get(0),"Подзадачи не совпадают");
+        assertEquals(1, SubTasks.size(), "Неверное количество подзадач");
+        assertEquals(subTask11, SubTasks.get(0), "Подзадачи не совпадают");
     }
 
     @DisplayName("Проверка удаления подзадачи по id")
     @Test
-    void deleteSubTask(){
+    void deleteSubTask() {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
@@ -351,7 +355,7 @@ class InMemoryTaskManagerTest {
 
     @DisplayName("Проверка получения списка подзадач эпика")
     @Test
-    void SubTaskOfTheEpic(){
+    void SubTaskOfTheEpic() {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
@@ -366,7 +370,7 @@ class InMemoryTaskManagerTest {
         final List<SubTask> SubTasks = taskManager.getEpicSubTasks(epic1);
 
         assertNotNull(SubTasks, "Подзадачи не возвращаются");
-        assertEquals(3, SubTasks.size(),"Неверное количество подзадач");
-        assertEquals(subTask11, SubTasks.get(0),"Подзадачи не совпадают");
+        assertEquals(3, SubTasks.size(), "Неверное количество подзадач");
+        assertEquals(subTask11, SubTasks.get(0), "Подзадачи не совпадают");
     }
 }
