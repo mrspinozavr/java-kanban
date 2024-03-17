@@ -1,6 +1,5 @@
 import service.InMemoryTaskManager;
 import service.Managers;
-import service.TaskManager;
 import model.Epic;
 import model.SubTask;
 import model.Task;
@@ -28,9 +27,9 @@ public class Main {
         Epic epic2 = taskManager.createEpic(new Epic("Планы на здоровье 2024", "Заняться здоровьем"));
         System.out.println("Придумал себе первый Эпик: " + epic1);
         System.out.println("Придумал себе ворой Эпик: " + epic2);
-        SubTask subTask1 = new SubTask("Курсы java","Записаться на курс Java - разработчик", epic1);
-        SubTask subTask2 = new SubTask("Пройти пять спринтов","Не сорваться и закончить начатое", epic1);
-        SubTask subTask3 = new SubTask("Пройти чекап","Сдать анализы", epic2);
+        SubTask subTask1 = new SubTask("Курсы java", "Записаться на курс Java - разработчик", epic1);
+        SubTask subTask2 = new SubTask("Пройти пять спринтов", "Не сорваться и закончить начатое", epic1);
+        SubTask subTask3 = new SubTask("Пройти чекап", "Сдать анализы", epic2);
 
         taskManager.createSubTask(subTask1);
         taskManager.createSubTask(subTask2);
@@ -42,7 +41,7 @@ public class Main {
         System.out.println();
         System.out.println("Ищем конкретную подзадачу: " + taskManager.getSubTask(5));
 
-        SubTask newSubTask2 = new SubTask("Пройти шесть спринтов","Не сорваться и закончить начатое", epic1);
+        SubTask newSubTask2 = new SubTask("Пройти шесть спринтов", "Не сорваться и закончить начатое", epic1);
         newSubTask2.setId(5);
         taskManager.updateSubTask(newSubTask2);
         System.out.println("Список подзадач первого эпика " + epic1.getSubTasks().size() + taskManager.getEpicSubTasks(epic1));
