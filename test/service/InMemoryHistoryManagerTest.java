@@ -1,8 +1,8 @@
 package service;
 
-import model.Task;
 import model.Epic;
 import model.SubTask;
+import model.Task;
 import model.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -10,7 +10,8 @@ import org.junit.jupiter.api.Test;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class InMemoryHistoryManagerTest {
     InMemoryHistoryManager historyManager;
@@ -25,7 +26,7 @@ class InMemoryHistoryManagerTest {
         task.setId(1);
         epic = new Epic("Выучить Java", "Начать учиться.");
         epic.setId(2);
-        subtask = new SubTask("Подзадача 1-1", "Записаться на курс", epic);
+        subtask = new SubTask("Подзадача 1-1", "Записаться на курс", epic.getId());
         subtask.setId(3);
     }
 

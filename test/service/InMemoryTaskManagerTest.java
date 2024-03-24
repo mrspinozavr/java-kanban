@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class InMemoryTaskManagerTest {
 
-    InMemoryTaskManager taskManager = new InMemoryTaskManager(Managers.getDefaultHistory());
+    InMemoryTaskManager taskManager = new InMemoryTaskManager();
 
     // Task
     @DisplayName("Проверка получения списка всех задач")
@@ -230,9 +230,9 @@ class InMemoryTaskManagerTest {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
-        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);
-        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1);
-        SubTask subTask13 = new SubTask("Подзадача 1-3", "Взять отпуск", epic1);
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1.getId());
+        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1.getId());
+        SubTask subTask13 = new SubTask("Подзадача 1-3", "Взять отпуск", epic1.getId());
 
         taskManager.createSubTask(subTask11);
         taskManager.createSubTask(subTask12);
@@ -251,9 +251,9 @@ class InMemoryTaskManagerTest {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
-        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);
-        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1);
-        SubTask subTask13 = new SubTask("Подзадача 1-3", "Взять отпуск", epic1);
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1.getId());
+        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1.getId());
+        SubTask subTask13 = new SubTask("Подзадача 1-3", "Взять отпуск", epic1.getId());
 
         taskManager.createSubTask(subTask11);
         taskManager.createSubTask(subTask12);
@@ -272,8 +272,7 @@ class InMemoryTaskManagerTest {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
-        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);
-        ;
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1.getId());
         taskManager.createSubTask(subTask11);
 
         final int idTask = subTask11.getId();
@@ -289,9 +288,9 @@ class InMemoryTaskManagerTest {
         Epic epic1 = new Epic("Эпик 1", "Большой переезд."); // id Task 3
         taskManager.createEpic(epic1);
 
-        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);
-        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1);
-        SubTask subTask13 = new SubTask("Подзадача 1-3", "Взять отпуск", epic1);
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1.getId());
+        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1.getId());
+        SubTask subTask13 = new SubTask("Подзадача 1-3", "Взять отпуск", epic1.getId());
 
         taskManager.createSubTask(subTask11);
         taskManager.createSubTask(subTask12);
@@ -316,13 +315,13 @@ class InMemoryTaskManagerTest {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
-        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1.getId());
         taskManager.createSubTask(subTask11);
 
         final int idTask = subTask11.getId();
         SubTask savedSubTask = taskManager.getSubTask(idTask);
 
-        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1);
+        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1.getId());
         subTask12.setId(savedSubTask.getId()); // присвоили новой подзадаче id первой подзадачи
 
         savedSubTask = subTask12;
@@ -344,7 +343,7 @@ class InMemoryTaskManagerTest {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
-        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1.getId());
         taskManager.createSubTask(subTask11);
 
         final int idSubTask = subTask11.getId();
@@ -359,9 +358,9 @@ class InMemoryTaskManagerTest {
         Epic epic1 = new Epic("Выучить Java", "Начать учиться.");
         taskManager.createEpic(epic1);
 
-        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1);
-        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1);
-        SubTask subTask13 = new SubTask("Подзадача 1-3", "Взять отпуск", epic1);
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", epic1.getId());
+        SubTask subTask12 = new SubTask("Подзадача 1-2", "Купить книгу", epic1.getId());
+        SubTask subTask13 = new SubTask("Подзадача 1-3", "Взять отпуск", epic1.getId());
 
         taskManager.createSubTask(subTask11);
         taskManager.createSubTask(subTask12);
