@@ -13,7 +13,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         this.file = file;
     }
 
-    public void save() {
+    private void save() {
         try (FileWriter fileWriter = new FileWriter(file, StandardCharsets.UTF_8)) {
             fileWriter.write(HEADER_CSV_FILE);
 
@@ -133,20 +133,23 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
 
     @Override
     public Task getTask(int id) {
+        Task getTask = super.getTask(id);
         save();
-        return super.getTask(id);
+        return getTask;
     }
 
     @Override
     public SubTask getSubTask(int id) {
+        SubTask getSubTask = super.getSubTask(id);
         save();
-        return super.getSubTask(id);
+        return getSubTask;
     }
 
     @Override
     public Epic getEpic(int id) {
+        Epic getEpic = super.getEpic(id);
         save();
-        return super.getEpic(id);
+        return getEpic;
     }
 
     @Override

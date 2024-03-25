@@ -19,7 +19,6 @@ class FileBackedTasksManagerTest {
         FileBackedTaskManager manager = new FileBackedTaskManager(file);
         manager.createEpic(epic);
         manager.addToHistory(epic.getId());
-        manager.save();
         FileBackedTaskManager fileBackedTasksManager = FileBackedTaskManager.loadFromFile(file);
         Epic epicById = fileBackedTasksManager.getEpic(epic.getId());
         assertEquals(epic, epicById);
