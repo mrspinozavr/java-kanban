@@ -1,12 +1,12 @@
-import model.Epic;
-import model.SubTask;
-import model.Task;
-import service.InMemoryTaskManager;
+//import model.Epic;
+//import model.SubTask;
+//import model.Task;
+//import service.InMemoryTaskManager;
 
 public class Main {
 
     public static void main(String[] args) {
-        InMemoryTaskManager taskManager = new InMemoryTaskManager();
+        /*InMemoryTaskManager taskManager = new InMemoryTaskManager();
         Task task = taskManager.createTask(new Task("Новая задача", "Пока не знаю для чего"));
         System.out.println("Созданная задача: " + task);
 
@@ -50,5 +50,6 @@ public class Main {
         System.out.println("Список всех эпиков " + taskManager.getAllEpics().size() + taskManager.getAllEpics());
         taskManager.deleteSubTask(newSubTask2.getId());
         System.out.println("Список всех подзадач " + taskManager.getAllSubTasks().size() + taskManager.getAllSubTasks());
+        */
     }
 }
