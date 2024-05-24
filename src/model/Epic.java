@@ -8,6 +8,7 @@ import java.util.Objects;
 public class Epic extends Task {
 
     private final List<SubTask> subTasks;
+    private LocalDateTime endTime;
 
     public Epic(String name, String description) {
         super(name, description, TaskStatus.NEW, LocalDateTime.of(2024, 1, 1, 0, 0), 0);

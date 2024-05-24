@@ -10,7 +10,6 @@ public class Task {
     private int id;
     private TaskStatus status;
     protected LocalDateTime startTime;
-    protected LocalDateTime endTime;
     private int duration;
     public static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("HH:mm - dd.MM.yyyy");
 
