@@ -1,15 +1,18 @@
 package service;
 
+import exception.ManagerSaveException;
 import model.*;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
 
 public class FileBackedTaskManager extends InMemoryTaskManager {
     private final File file;
-    private static final String HEADER_CSV_FILE = "id,type,name,status,description,epic\n";
+    private static final String HEADER_CSV_FILE = "id,type,name,status,description,startTime,endTime,duration,epic\n";
 
-    public FileBackedTaskManager(File file) {
+    public FileBackedTaskManager(HistoryManager historyManager, File file) {
+        super(historyManager);
         this.file = file;
     }
 
@@ -37,9 +40,7 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         }
     }
 
-    public static FileBackedTaskManager loadFromFile(File file) {
-
-        FileBackedTaskManager tasksManager = new FileBackedTaskManager(file);
+    public void loadFromFile(File file) {
         int idMax = 0;
         try (BufferedReader br = new BufferedReader(new FileReader(file, StandardCharsets.UTF_8))) {
 
@@ -55,13 +56,22 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                     int id = task.getId();
                     switch (task.getType()) {
                         case TASK:
-                            tasksManager.createTask(task);
+                            tasks.put(task.getId(), task);
+                            prioritizedTasks.add(task);
                             break;
                         case EPIC:
-                            tasksManager.createEpic((Epic) task);
+                            epics.put(task.getId(), (Epic) task);
+                            calculateStartTimeAndDuration((Epic) task);
                             break;
                         case SUBTASK:
-                            tasksManager.createSubTask((SubTask) task);
+                            Epic epic = epics.get(((SubTask) task).getEpicId());
+                            if (epic != null) {
+                                subTasks.put(task.getId(), (SubTask) task);
+                                epic.addSubTask((SubTask) task);
+                                prioritizedTasks.add(task);
+                                calculateStatus(epic);
+                                calculateStartTimeAndDuration(epic);
+                            }
                             break;
                         default:
                             System.out.println("Это не задача");
@@ -70,18 +80,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
                         maxId = id;
                     }
                 }
-                tasksManager.setStartId(idMax);
+                setStartId(idMax);
             }
 
             String historyLine = br.readLine();
             for (Integer id : ConverterCSV.historyFromString(historyLine)) {
-                tasksManager.addToHistory(id);
+                addToHistory(id);
             }
-
         } catch (IOException e) {
             throw new ManagerSaveException("Не удалось прочитать данные из файла", e);
         }
-        return tasksManager;
     }
 
     private static Task fromString(String value) {
@@ -91,20 +99,26 @@ public class FileBackedTaskManager extends InMemoryTaskManager {
         String name = values[2];
         String status = values[3];
         String description = values[4];
-        Integer idOfEpic = type.equals(TaskType.SUBTASK.toString()) ? Integer.valueOf(values[5]) : null;
+        LocalDateTime startTime = LocalDateTime.parse(values[5], Task.FORMATTER);
+        LocalDateTime endTime = LocalDateTime.parse(values[6], Task.FORMATTER);
+        int duration = Integer.parseInt(values[7]);
+        Integer idOfEpic = type.equals(TaskType.SUBTASK.toString()) ? Integer.valueOf(values[8]) : null;
         switch (type) {
             case "EPIC":
                 Epic epic = new Epic(name, description);
                 epic.setId(Integer.parseInt(id));
                 epic.setStatus(TaskStatus.valueOf(status.toUpperCase()));
+                epic.setStartTime(startTime);
+                epic.setStartTime(endTime);
+                epic.setDuration(duration);
                 return epic;
             case "SUBTASK":
-                SubTask subTask = new SubTask(name, description, idOfEpic);
+                SubTask subTask = new SubTask(name, description, idOfEpic, startTime, duration);
                 subTask.setStatus(TaskStatus.valueOf(status.toUpperCase()));
                 subTask.setId(Integer.parseInt(id));
                 return subTask;
             case "TASK":
-                Task task = new Task(name, description, TaskStatus.valueOf(status.toUpperCase()));
+                Task task = new Task(name, description, TaskStatus.valueOf(status.toUpperCase()), startTime, duration);
                 task.setId(Integer.parseInt(id));
                 return task;
             default:
