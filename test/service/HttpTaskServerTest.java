@@ -59,47 +59,6 @@ class HttpTaskServerTest {
         taskServer.stop();
     }
 
-    private HttpResponse<String> sendPOST(String path, Task task) throws IOException, InterruptedException {
-        URI uri = URI.create(path);
-        String json = gson.toJson(task);
-        final HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(json);
-        HttpRequest request = HttpRequest.newBuilder()
-                .uri(uri)
-                .POST(body)
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
-    }
-
-    private HttpResponse<String> sendGET(String path, int id) throws IOException, InterruptedException {
-        HttpRequest request;
-        URI uri;
-        if (id == 0) {
-            uri = URI.create(path);
-        } else {
-            uri = URI.create(path + "/" + id);
-        }
-        request = HttpRequest.newBuilder()
-                .uri(uri)
-                .GET()
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
-    }
-
-    private HttpResponse<String> sendDELETE(String path, int id) throws IOException, InterruptedException {
-        HttpRequest request;
-        URI uri;
-        if (id == 0) {
-            uri = URI.create(path);
-        } else {
-            uri = URI.create(path + "/" + id);
-        }
-        request = HttpRequest.newBuilder()
-                .uri(uri)
-                .DELETE()
-                .build();
-        return client.send(request, HttpResponse.BodyHandlers.ofString());
-    }
-
     @Test
     void shouldGetTasks() throws IOException, InterruptedException {
         Task task1 = new Task("Задача 1", "Закрыть 5 спринт", TaskStatus.NEW, LocalDateTime.of(2024, 5, 19, 0, 0), 25);
@@ -118,8 +77,12 @@ class HttpTaskServerTest {
     void shouldGetEpics() throws IOException, InterruptedException {
         Epic epic1 = new Epic("description1", "name1");
         Epic epic2 = new Epic("description2", "name2");
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", 1, LocalDateTime.of(2024, 5, 17, 0, 0), 46);
+        SubTask subTask21 = new SubTask("Подзадача 1-2", "Купить книгу", 2, LocalDateTime.of(2024, 5, 16, 0, 0), 26);
         sendPOST(EPIC_BASE_URL, epic1);
         sendPOST(EPIC_BASE_URL, epic2);
+        sendPOST(SUBTASK_BASE_URL, subTask11);
+        sendPOST(SUBTASK_BASE_URL, subTask21);
 
         HttpResponse<String> response = sendGET(EPIC_BASE_URL, 0);
         assertEquals(200, response.statusCode());
@@ -163,8 +126,12 @@ class HttpTaskServerTest {
     void shouldGetEpicById() throws IOException, InterruptedException {
         Epic epic1 = new Epic("description1", "name1");
         Epic epic2 = new Epic("description2", "name2");
+        SubTask subTask11 = new SubTask("Подзадача 1-1", "Записаться на курс", 1, LocalDateTime.of(2024, 5, 17, 0, 0), 46);
+        SubTask subTask21 = new SubTask("Подзадача 1-2", "Купить книгу", 2, LocalDateTime.of(2024, 5, 16, 0, 0), 26);
         sendPOST(EPIC_BASE_URL, epic1);
         sendPOST(EPIC_BASE_URL, epic2);
+        sendPOST(SUBTASK_BASE_URL, subTask11);
+        sendPOST(SUBTASK_BASE_URL, subTask21);
 
         HttpResponse<String> response = sendGET(EPIC_BASE_URL, 2);
         assertEquals(200, response.statusCode());
@@ -362,5 +329,46 @@ class HttpTaskServerTest {
         assertNotNull(tasks, "задачи не возвращаются");
         assertEquals(3, tasks.size(), "Неверное количество задач");
         assertEquals(task2.getDescription(), tasks.get(0).getDescription(), "Задачи не совпадают");
+    }
+
+    private HttpResponse<String> sendPOST(String path, Task task) throws IOException, InterruptedException {
+        URI uri = URI.create(path);
+        String json = gson.toJson(task);
+        final HttpRequest.BodyPublisher body = HttpRequest.BodyPublishers.ofString(json);
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(uri)
+                .POST(body)
+                .build();
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    private HttpResponse<String> sendGET(String path, int id) throws IOException, InterruptedException {
+        HttpRequest request;
+        URI uri;
+        if (id == 0) {
+            uri = URI.create(path);
+        } else {
+            uri = URI.create(path + "/" + id);
+        }
+        request = HttpRequest.newBuilder()
+                .uri(uri)
+                .GET()
+                .build();
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
+    }
+
+    private HttpResponse<String> sendDELETE(String path, int id) throws IOException, InterruptedException {
+        HttpRequest request;
+        URI uri;
+        if (id == 0) {
+            uri = URI.create(path);
+        } else {
+            uri = URI.create(path + "/" + id);
+        }
+        request = HttpRequest.newBuilder()
+                .uri(uri)
+                .DELETE()
+                .build();
+        return client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 }

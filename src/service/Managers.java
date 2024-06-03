@@ -3,8 +3,10 @@ package service;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import http.adapters.InstantAdapter;
+import http.adapters.LocalDateTimeAdapter;
 
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 public class Managers {
     public static HistoryManager getDefaultHistoryManager() {
@@ -20,6 +22,7 @@ public class Managers {
                 .serializeNulls()
                 .setPrettyPrinting()
                 .registerTypeAdapter(Instant.class, new InstantAdapter())
+                .registerTypeAdapter(LocalDateTime.class, new LocalDateTimeAdapter())
                 .create();
     }
 }
